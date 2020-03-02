@@ -2,14 +2,15 @@ const express = require("express");
 const morgan = require("morgan");
 const app = express();
 const bodyParse = require("body-parser");
+const mongoose = require("mongoose");
 
 const productRoutes = require("./api/routes/products");
 const orderRoutes = require("./api/routes/orders");
-// app.use((req,res,next)=> {
-//     res.status(200).json({
-//         message: "it works"
-//     })
-// })
+
+mongoose.connect(
+  `mongodb+srv://krezchikov:${process.env.MONGO_PASS}@cluster0-e8gsp.mongodb.net/test?retryWrites=true&w=majority`,
+  { useNewUrlParser: true }
+);
 
 app.use(morgan("dev"));
 app.use(bodyParse.urlencoded({ extended: false }));
