@@ -9,7 +9,7 @@ const orderRoutes = require("./api/routes/orders");
 
 mongoose.connect(
   `mongodb+srv://krezchikov:${process.env.MONGO_PASS}@cluster0-e8gsp.mongodb.net/test?retryWrites=true&w=majority`,
-  { useNewUrlParser: true }
+  { useNewUrlParser: true, useUnifiedTopology: true }
 );
 
 app.use(morgan("dev"));

@@ -6,10 +6,25 @@ const Product = require("../models/product");
 
 router.get("/", (req, res, next) => {
   Product.find()
+    .select("-__v")
     .exec()
     .then(results => {
-      console.log(results);
-      res.status(200).json(results);
+      const response = {
+        count: results.length,
+        products: results.map(result => {
+          return {
+            name: result.name,
+            price: result.price,
+            _id: result._id,
+            request: {
+              type: "GET",
+              url: `http://localhost:3000/products/${result.id}`
+            }
+          };
+        })
+      };
+      console.log(response);
+      res.status(200).json(response);
     })
     .catch(error => {
       console.log(error);
@@ -29,7 +44,15 @@ router.post("/", (req, res, next) => {
       console.log(result);
       res.status(201).json({
         message: "Hangling post products",
-        createdProduct: result
+        createdProduct: {
+          name: result.name,
+          price: result.price,
+          _id: result._id,
+          request: {
+            type: "GET",
+            url: `http://localhost:3000/products/${result.id}`
+          }
+        }
       });
     })
     .catch(error => {
@@ -41,6 +64,7 @@ router.post("/", (req, res, next) => {
 router.get("/:productId", (req, res, next) => {
   const id = req.params.productId;
   Product.findById(id)
+    .select("-__v")
     .exec()
     .then(result => {
       console.log(result);
