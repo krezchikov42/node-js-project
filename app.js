@@ -13,6 +13,7 @@ mongoose.connect(
 );
 
 app.use(morgan("dev"));
+app.use('/uploads', express.static('uploads'))
 app.use(bodyParse.urlencoded({ extended: false }));
 app.use(bodyParse.json());
 
