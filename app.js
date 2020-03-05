@@ -6,6 +6,7 @@ const mongoose = require("mongoose");
 
 const productRoutes = require("./api/routes/products");
 const orderRoutes = require("./api/routes/orders");
+const userRoutes = require("./api/routes/users")
 
 mongoose.connect(
   `mongodb+srv://krezchikov:${process.env.MONGO_PASS}@cluster0-e8gsp.mongodb.net/test?retryWrites=true&w=majority`,
@@ -29,6 +30,7 @@ app.use((req, res, next) => {
 });
 app.use("/products", productRoutes);
 app.use("/orders", orderRoutes);
+app.use("/users", userRoutes)
 
 app.use((req, res, next) => {
   const error = Error("Not found");
